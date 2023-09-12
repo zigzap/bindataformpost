@@ -1,0 +1,13 @@
+.{
+    .name = "binaryformdata",
+    .version = "0.0.1",
+
+    .dependencies = .{
+        // zap v0.1.10-pre
+        .zap = .{
+            .url = "https://github.com/zigzap/zap/archive/8dbe0671a65e12dc44c7f8eecb5f0e5134adb6f4.tar.gz",
+            .hash = "12204d0d3d84dfc30b52997602be1732f4b0840ab903645bcb5347100203ab8d5a46",
+
+        }
+    }
+}

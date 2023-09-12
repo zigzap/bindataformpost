@@ -20,21 +20,6 @@ const Handler = struct {
         var param_count = r.getParamCount();
         std.log.info("param_count: {}", .{param_count});
 
-        // iterate over all params as strings
-        //
-        // !!!
-        // !!! skipped since files aren't strings
-        // !!!
-        //
-        // var strparams = r.parametersToOwnedStrList(Handler.alloc, false) catch unreachable;
-        // defer strparams.deinit();
-        // std.debug.print("\n", .{});
-        // for (strparams.items) |kv| {
-        //     std.log.info("ParamStr `{s}` in owned strlist is `{s}`", .{ kv.key.str, kv.value.str });
-        // }
-        //
-        // std.debug.print("\n", .{});
-
         // iterate over all params
         //
         // HERE WE HANDLE THE BINARY FILE
@@ -57,6 +42,13 @@ const Handler = struct {
                     },
                     else => {
                         // might be a string param, we don't care
+                        // let's just get it as string
+                        if (r.getParamStr(kv.key.str, Handler.alloc, false)) |maybe_str| {
+                            const value: []const u8 = if (maybe_str) |s| s.str else "(no value)";
+                            std.log.debug("   {s} = {s}", .{ kv.key.str, value });
+                        } else |err| {
+                            std.log.err("Error: {any}\n", .{err});
+                        }
                     },
                 }
             }
